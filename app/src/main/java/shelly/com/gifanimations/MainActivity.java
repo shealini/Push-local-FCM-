@@ -1,7 +1,5 @@
 package shelly.com.gifanimations;
 
-import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -14,13 +12,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Date;
+import shelly.com.gifanimations.OpenAppPeriodically.ServiceToOpenAppDaily;
+import shelly.com.gifanimations.PushbyTagManager.ServiceToRefreshTagManager;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,18 +38,12 @@ public class MainActivity extends AppCompatActivity {
 //        gifView.setMovieTime(3000);
 
 
-
-        sharedPreferences = this.getSharedPreferences("SERVICE", 0);
-        if(!sharedPreferences.getBoolean("isServiceRunning" , false)){
-
-            Log.d("inside Main", "Service Running = " + "False  ");
-
-        }else Log.d("inside Main" , "service " + sharedPreferences.getBoolean("isServiceRunning" , false));
-
         Intent intent = getIntent();
+
         if(intent.getAction() != null && intent.getAction() == "shelly.com.gifanimations.wakeup"){
 
             Log.d("inside Main" , "came from receiver");
+            Log.d("MyTagManager " , "came from daily service already Running") ;
             timerThread = new Thread() {
 
                 @Override
@@ -67,10 +58,23 @@ public class MainActivity extends AppCompatActivity {
             };
 
             timerThread.start();
-        }else {
-            Intent serviceIntent = new Intent(this, MyService.class);
+        }else if(intent.getAction() != null && intent.getAction() == "shelly.com.gifanimations.localpush"){
+
+            Log.d("MyTagManager " , "came from Push service already Running") ;
+
+        }
+
+        else  {
+
+            Log.d("MyTagManager " , "Starting both the services ") ;
+            Intent pushServiceIntent = new Intent(this , ServiceToRefreshTagManager.class);
+            startService(pushServiceIntent);
+
+            Intent serviceIntent = new Intent(this, ServiceToOpenAppDaily.class);
             startService(serviceIntent);
         }
+
+
 
 
         ed1=(EditText)findViewById(R.id.editText);

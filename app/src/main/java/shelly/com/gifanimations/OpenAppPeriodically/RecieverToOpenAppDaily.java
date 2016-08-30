@@ -1,4 +1,4 @@
-package shelly.com.gifanimations;
+package shelly.com.gifanimations.OpenAppPeriodically;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,10 +19,14 @@ import com.google.android.gms.common.api.ResultCallback;
 
 import java.util.concurrent.TimeUnit;
 
+import shelly.com.gifanimations.ContainerHolderSingleton;
+import shelly.com.gifanimations.MainActivity;
+import shelly.com.gifanimations.R;
+
 /**
  * Created by Thegirlwithspellingmistake on 23/08/16.
  */
-public class MyAppReciever extends BroadcastReceiver {
+public class RecieverToOpenAppDaily extends BroadcastReceiver {
     private static int i  ;
     private static final String CONTAINER_ID = "GTM-K8XVZX";
     private  String title = "";
@@ -34,7 +38,11 @@ public class MyAppReciever extends BroadcastReceiver {
 
         Log.d("inside receiver", "");
 
-        refreshTagManager(context);
+        Log.d("MyTagManager ", "running Daily app open RECEIVER ") ;
+
+        //TODO : to send notification or open app periodically #uncomment below code
+
+       // refreshTagManager(context);
 //
 //        Intent intentActivity = new Intent(context , MainActivity.class);
 //        intentActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -97,7 +105,7 @@ public class MyAppReciever extends BroadcastReceiver {
 
         //TODO : app closes with in five secs Fix this or open some other acivity
         // or set bool to diffreniae auo open and local push
-        resultIntent.setAction("shelly.com.gifanimations.wakeup");
+        resultIntent.setAction("shelly.com.gifanimations.localpush");
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

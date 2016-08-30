@@ -1,4 +1,4 @@
-package shelly.com.gifanimations;
+package shelly.com.gifanimations.OpenAppPeriodically;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -13,14 +13,14 @@ import java.util.Date;
 /**
  * Created by Thegirlwithspellingmistake on 25/08/16.
  */
-public class MyService extends IntentService {
+public class ServiceToOpenAppDaily extends IntentService {
 
    private Date futureDate;
     private SharedPreferences sharedPreferences ;
     private SharedPreferences.Editor editor ;
 
 
-    public MyService() {
+    public ServiceToOpenAppDaily() {
         super("");
     }
 
@@ -34,16 +34,10 @@ public class MyService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        sharedPreferences = this.getSharedPreferences("SERVICE" , 0);
-        editor = sharedPreferences.edit();
-
-        editor.putBoolean("isServiceRunning" , true);
-
-        Log.d("inside service", "Service Running = " + "True ");
-        editor.commit();
+        Log.d("MyTagManager " , "running Daily app open SERVICE ") ;
 
         AlarmManager alarmMgr = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
-        Intent intentReceiver = new Intent(this, MyAppReciever.class);
+        Intent intentReceiver = new Intent(this, RecieverToOpenAppDaily.class);
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intentReceiver, 0);
 //        intent.putExtra("isnotif" , false);
@@ -58,27 +52,7 @@ public class MyService extends IntentService {
 // setRepeating() lets you specify a precise custom interval--in this case,
 // 1 seconds .
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                1000*60*1, alarmIntent);
-
-
-        //NOTIFICATION
-//
-//        AlarmManager alarmMgrNotif = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
-//        Intent intentReceiverNotif = new Intent(this, MyAppReciever.class);
-//        intent.putExtra("isnotif" , true);
-//
-//        PendingIntent alarmIntentnotif = PendingIntent.getBroadcast(this, 0, intentReceiverNotif, 0);
-//
-//// Set the alarm to start at 8:30 a.m.
-//        Calendar calendarnotif = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 6);
-//        calendar.set(Calendar.MINUTE, 30);
-//        calendar.set(Calendar.SECOND , 0);
-//
-//// setRepeating() lets you specify a precise custom interval--in this case,
-//// 1 seconds .
-//        alarmMgrNotif.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*1,alarmIntentnotif);
+                1000*60*60*1, alarmIntent);
 
 
     }

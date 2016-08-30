@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MyAppReciever" android:exported="true">
+        <receiver android:name=".OpenAppPeriodically.RecieverToOpenAppDaily" android:exported="true">
             <intent-filter>
                 <action android:name="shelly.com.gifanimations.wakeup">
 
@@ -31,8 +31,22 @@
 
         </receiver>
 
-        <service android:name="shelly.com.gifanimations.MyService">
+        <service android:name=".OpenAppPeriodically.ServiceToOpenAppDaily">
         </service>
+
+
+        <receiver android:name=".PushbyTagManager.RecieverToSendNotification" android:exported="true">
+            <intent-filter>
+                <action android:name="shelly.com.gifanimations.localpush">
+
+                </action>
+            </intent-filter>
+
+        </receiver>
+
+        <service android:name=".PushbyTagManager.ServiceToRefreshTagManager">
+        </service>
+
         <service android:name=".CustomService"/>
 
         <service android:name="com.google.android.gms.tagmanager.InstallReferrerService" />
