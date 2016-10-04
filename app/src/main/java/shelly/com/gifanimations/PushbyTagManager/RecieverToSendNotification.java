@@ -37,26 +37,13 @@ public class RecieverToSendNotification extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.d("MyTagManager ", "running Tag Manager  RECEIVER ") ;
-
-
         Log.d("MyTagManager ", "running Tag Manager  RECEIVER & old id is  " + previousId) ;
 
         refreshTagManager(context);
 
-
-//      //TODO : to open app periodically
-//        Intent intentActivity = new Intent(context , MainActivity.class);
-//        intentActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-//        intentActivity.setAction("shelly.com.gifanimations.wakeup");
-//        context.startActivity(intentActivity);
-
     }
 
     private void refreshTagManager(final Context context){
-
-
         TagManager tagManager = TagManager.getInstance(context);
         tagManager.setVerboseLoggingEnabled(true);
 
@@ -109,10 +96,10 @@ public class RecieverToSendNotification extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.notif)
-                .setContentTitle(title )
+                .setContentTitle("TITLE " + " " + i )
                 .setSound(soundUri)
                 .setAutoCancel(true)
-                .setContentText(content);
+                .setContentText("I AM CONTENT ");
 
 
         Intent resultIntent = new Intent(context, MainActivity.class);

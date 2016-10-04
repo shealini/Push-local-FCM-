@@ -36,6 +36,13 @@ public class ServiceToOpenAppDaily extends IntentService {
 
         Log.d("MyTagManager " , "running Daily app open SERVICE ") ;
 
+        sharedPreferences = this.getSharedPreferences("TIMERSERVICE", 0);
+        editor = sharedPreferences.edit();
+
+        editor.putBoolean("isOpenAppDailyServiceRunning", true);
+
+        editor.commit();
+
         AlarmManager alarmMgr = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
         Intent intentReceiver = new Intent(this, RecieverToOpenAppDaily.class);
 

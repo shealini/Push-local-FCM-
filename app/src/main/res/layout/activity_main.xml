@@ -28,7 +28,8 @@
         android:layout_alignEnd="@+id/textView2"
         android:hint="Name"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:visibility="gone" />
 
     <EditText
         android:layout_width="match_parent"
@@ -43,7 +44,8 @@
         android:layout_alignRight="@+id/editText2"
         android:layout_alignEnd="@+id/editText2"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:visibility="gone" />
 
     <Button
         android:layout_width="match_parent"
@@ -53,5 +55,14 @@
         android:layout_marginTop="77dp"
         android:layout_below="@+id/editText3"
         android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/notificationText"
+        android:text="Notification Text"
+        android:textSize="24dp"/>
 </LinearLayout>

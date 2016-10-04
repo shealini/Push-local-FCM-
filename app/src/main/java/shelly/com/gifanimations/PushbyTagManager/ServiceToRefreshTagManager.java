@@ -36,10 +36,15 @@ public class ServiceToRefreshTagManager extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        Log.d("inside service", "Service Running = " + "True ");
+        Log.d("MyTagManager " , "running Refresh Tag Manager Service ") ;
 
-        Log.d("MyTagManager ", "running Tag Manager  SERVICE  ") ;
 
+        sharedPreferences = this.getSharedPreferences("TIMERSERVICE", 0);
+        editor = sharedPreferences.edit();
+
+        editor.putBoolean("isRefreshTagServiceRunning", true);
+
+        editor.commit();
 
         AlarmManager alarmMgr = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
         Intent intentReceiver = new Intent(this, RecieverToSendNotification.class);
@@ -50,7 +55,7 @@ public class ServiceToRefreshTagManager extends IntentService {
 // Set the alarm to start at 8:30 a.m.
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.HOUR_OF_DAY, 4);
         calendar.set(Calendar.MINUTE, 02);
         calendar.set(Calendar.SECOND , 0);
 
@@ -60,24 +65,6 @@ public class ServiceToRefreshTagManager extends IntentService {
                 1000*60*2, alarmIntent);
 
 
-        //NOTIFICATION
-//
-//        AlarmManager alarmMgrNotif = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
-//        Intent intentReceiverNotif = new Intent(this, RecieverToOpenAppDaily.class);
-//        intent.putExtra("isnotif" , true);
-//
-//        PendingIntent alarmIntentnotif = PendingIntent.getBroadcast(this, 0, intentReceiverNotif, 0);
-//
-//// Set the alarm to start at 8:30 a.m.
-//        Calendar calendarnotif = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 6);
-//        calendar.set(Calendar.MINUTE, 30);
-//        calendar.set(Calendar.SECOND , 0);
-//
-//// setRepeating() lets you specify a precise custom interval--in this case,
-//// 1 seconds .
-//        alarmMgrNotif.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),1000*60*1,alarmIntentnotif);
 
 
     }

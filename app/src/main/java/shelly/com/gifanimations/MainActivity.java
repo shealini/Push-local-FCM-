@@ -15,6 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.List;
 
 import shelly.com.gifanimations.OpenAppPeriodically.ServiceToOpenAppDaily;
 import shelly.com.gifanimations.PushbyTagManager.ServiceToRefreshTagManager;
@@ -23,22 +26,28 @@ import shelly.com.gifanimations.PushbyTagManager.ServiceToRefreshTagManager;
 public class MainActivity extends AppCompatActivity {
     private GifView gifView ;
     private static int i = 0 ;
-    private SharedPreferences sharedPreferences ;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferencesService ;
     private Thread timerThread  = null ;
+    private boolean isRefreshTagServiceRunning = false;
+    private boolean isOpenAppDailyServiceRunning = false;
     EditText ed1,ed2,ed3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("Main Activity", "started " + i++);
-//        gifView = (GifView)findViewById(R.id.gifImageView);
-//        gifView.setMovieResource(R.drawable.gun10);
-//        gifView.setMovieTime(3000);
 
 
         Intent intent = getIntent();
+        sharedPreferencesService = this.getSharedPreferences("TIMERSERVICE", 0);
+
+        isRefreshTagServiceRunning = sharedPreferencesService.getBoolean("isRefreshTagServiceRunning", false);
+        isOpenAppDailyServiceRunning = sharedPreferencesService.getBoolean("isOpenAppDailyServiceRunning" , false);
+
+        Log.d("MyTagManager " , "isRefreshTagServiceRunning >> " + isRefreshTagServiceRunning ) ;
+
 
         if(intent.getAction() != null && intent.getAction() == "shelly.com.gifanimations.wakeup"){
 
@@ -64,16 +73,26 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else  {
+//        else  {
+//
+//            Log.d("MyTagManager " , "Starting both the services ") ;
+//            Intent pushServiceIntent = new Intent(this , ServiceToRefreshTagManager.class);
+//            startService(pushServiceIntent);
+//
+//            Intent serviceIntent = new Intent(this, ServiceToOpenAppDaily.class);
+//            startService(serviceIntent);
+//        }
 
-            Log.d("MyTagManager " , "Starting both the services ") ;
-            Intent pushServiceIntent = new Intent(this , ServiceToRefreshTagManager.class);
-            startService(pushServiceIntent);
-
+        if(!isRefreshTagServiceRunning){
+            Log.d("MyTagManager" , "Saring service isRefreshTagServiceRunning " + isRefreshTagServiceRunning);
+            Intent serviceIntent = new Intent(this, ServiceToRefreshTagManager.class);
+            startService(serviceIntent);
+        }
+        if(!isOpenAppDailyServiceRunning){
+            Log.d("MyTagManager" , "Saring service isOpenAppDailyServiceRunning " + isOpenAppDailyServiceRunning);
             Intent serviceIntent = new Intent(this, ServiceToOpenAppDaily.class);
             startService(serviceIntent);
         }
-
 
 
 
